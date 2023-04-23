@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Stats</title>
+</head>
+<body>
+    <h1>User Stats</h1>
+    <p>Username: {{ user_stats["username"] }}</p>
+    <p>Session time: {{ user_stats["session_time"] }}</p>
+    <p>Input octets: {{ user_stats["input_octets"] }}</p>
+    <p>Output octets: {{ user_stats["output_octets"] }}</p>
+    <p>Total volumes(bytes): {{ user_stats["input_octets"] + user_stats["output_octets"] }}</p>
+    <form action="{{ url_for('kick') }}" method="post">
+	    <input type="hidden" name="id" id="id" value="{{ user_stats['username'] }}" />
+	    <button type="submit">kick</button>
+    </form>
+    
+    <form action="{{ url_for('add_limit') }}" method="post">
+    	<label for="volume">Volume:</label>
+	<input type="text" id="volume" name="volume" value="{{ curr_limit['Max-Daily-Volume'] }}">
+        <br>
+        <label for="timelimit">Timelimit:</label>
+        <input type="text" id="timelimit" name="timelimit" value="{{ curr_limit['Max-Daily-Session'] }}">
+        <br> 
+    	<input type="hidden" name="id" id="id" value="{{ user_stats['username'] }}" />
+        <button type="submit">add_rule</button>
+    </form>
+    <a href="{{ url_for('logged_in') }}">Back</a>
+</body>
+</html>
